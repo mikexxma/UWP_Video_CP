@@ -1,0 +1,38 @@
+﻿<Page
+    x:Class="UWP_Video_CP.GetSingleFrame"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWP_Video_CP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Name="MyGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+       
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+ 
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            
+        </Grid.ColumnDefinitions>
+        <RelativePanel Grid.ColumnSpan="3">
+            <Button Name="GET_SIMGLE_FRAME" Height="40" Click="GET_SIMGLE_FRAME_Click" Content="Get Single Frame"></Button>
+            <TextBlock Name="FPS" RelativePanel.AlignRightWithPanel="True" Margin="0,0,10,0"></TextBlock>
+        </RelativePanel>
+        <Image Name="VideoFrame0" Width="250" Height="350" Grid.Row="1" ></Image>
+        <Image Name="VideoFrame1" Width="250" Height="350" Grid.Row="1" Grid.Column="1"></Image>
+        <Image Name="VideoFrame2" Width="250" Height="350" Grid.Row="1" Grid.Column="2"></Image>
+
+        <Image Name="VideoFrame3" Width="250" Height="350" Grid.Row="2" ></Image>
+        <Image Name="VideoFrame4" Width="250" Height="350" Grid.Row="2" Grid.Column="1"></Image>
+        <Image Name="VideoFrame5" Width="250" Height="350" Grid.Row="2" Grid.Column="2"></Image>
+
+        
+    </Grid>
+</Page>
