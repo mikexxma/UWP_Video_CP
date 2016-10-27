@@ -68,7 +68,6 @@ namespace UWP_Video_CP
                 bitmapImage.SetSource(randomAccessStream);
                 Image img = (Image)this.FindName("VideoFrame" + i);
                 img.Source = bitmapImage;
-
             }
 
             //for (int i = 0; i <60; i++)
@@ -113,6 +112,8 @@ namespace UWP_Video_CP
             //randomAccessStream3.Seek(0);
             //bitmapImage3.SetSource(randomAccessStream3);
             //VideoFrame3.Source = bitmapImage3;
+
+            
         }
         public async Task<IInputStream> GetThumbnailAsync(StorageFile file,int milliseconds)
         {

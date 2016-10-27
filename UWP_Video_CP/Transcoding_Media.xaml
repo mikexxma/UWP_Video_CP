@@ -8,6 +8,40 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <RelativePanel>
+            <Button Name="PickVideo" Content="Chose a video" Click="PickVideo_Click"></Button>
+            <Button Name="TransCode" Content="TransCode to targetType" Click="TransCode_Click" RelativePanel.RightOf="PickVideo" Margin="10,0,0,0"></Button>
+        </RelativePanel>
 
+        <RelativePanel Grid.Row="1">
+            <ComboBox  x:Name="TargetFormat" Width="180" Height="Auto" SelectedIndex="0" >
+                <ComboBoxItem Content="H.264/MP4"/>
+                <ComboBoxItem Content="VC-1/WMV"/>
+                <ComboBoxItem Content="Uncompressed/AVI"/>
+            </ComboBox>
+
+            <ComboBox  RelativePanel.RightOf="TargetFormat" x:Name="ProfileSelect" Width="180" Height="Auto" SelectedIndex="2" Margin="10,0,0,0">
+                <ComboBoxItem Name="ComboBoxItem_1080p" Content="1080p (1920x1080)"/>
+                <ComboBoxItem Name="ComboBoxItem_720p" Content="720p (1280x720)"/>
+                <ComboBoxItem Name="ComboBoxItem_WVGA" Content="WVGA (800x480)"/>
+                <ComboBoxItem Name="ComboBoxItem_NTSC" Content="NTSC (720x480)"/>
+                <ComboBoxItem Name="ComboBoxItem_PAL" Content="PAL (720x576)"/>
+                <ComboBoxItem Name="ComboBoxItem_VGA" Content="VGA (640x480)"/>
+                <ComboBoxItem Name="ComboBoxItem_QVGA" Content="QVGA (320x240)"/>
+            </ComboBox>
+
+        </RelativePanel>
+        <RelativePanel  Grid.Row="2" >
+            <TextBlock x:Name="OutputMsg" Text=""></TextBlock>
+            <TextBlock Name="StatusMessage"></TextBlock>
+            <MediaElement RelativePanel.Below="StatusMessage" x:Name="mediaElement" AutoPlay="False" Margin="5" HorizontalAlignment="Stretch" AreTransportControlsEnabled="True" Width="400" Height="600"/>
+            
+        </RelativePanel>
+        
     </Grid>
 </Page>
