@@ -57,7 +57,6 @@ namespace UWP_Video_CP
             //var thumbnail1 = await GetThumbnailAsync(file,0);
             //var thumbnail2 = await GetThumbnailAsync(file, 1000);
             //var thumbnail3 = await GetThumbnailAsync(file, 2000);
-
             for (int i = 0; i < 6; i++)
             {
                 var thumbnail = await GetThumbnailAsync(file, i * 1000);

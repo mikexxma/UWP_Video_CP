@@ -18,6 +18,7 @@ namespace UWP_Video_CP.ViewModel
             lists.Add(new ListViewModel("Get Single Frame", cover2,typeof(GetSingleFrame)));
             lists.Add(new ListViewModel("Encode Images To Video", cover2, typeof(BitmapsToVideo)));
             lists.Add(new ListViewModel("Transcoding media", cover2, typeof(Transcoding_Media)));
+            lists.Add(new ListViewModel("Face Detect", cover2, typeof(FaceDetect)));
             return lists;
         } 
     }

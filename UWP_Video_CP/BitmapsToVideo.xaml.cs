@@ -51,7 +51,7 @@ namespace UWP_Video_CP
             foreach (StorageFile file in files)
             {
                 m_files.Add(file);
-                var clip =await MediaClip.CreateFromImageFileAsync(file, TimeSpan.Zero);
+                var clip =await MediaClip.CreateFromImageFileAsync(file, TimeSpan.FromMilliseconds(1000));
                 composition.Clips.Add(clip);
             }
 

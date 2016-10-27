@@ -101,6 +101,9 @@
     <Compile Include="ClipVideo.xaml.cs">
       <DependentUpon>ClipVideo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FaceDetect.xaml.cs">
+      <DependentUpon>FaceDetect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GetSingleFrame.xaml.cs">
       <DependentUpon>GetSingleFrame.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ClipVideo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FaceDetect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
