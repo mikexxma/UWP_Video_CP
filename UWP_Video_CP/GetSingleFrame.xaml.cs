@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Imaging;
 using Windows.Media.Editing;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -32,6 +34,7 @@ namespace UWP_Video_CP
         
         public GetSingleFrame()
         {
+           
             this.InitializeComponent();
         }
 
@@ -57,7 +60,7 @@ namespace UWP_Video_CP
 
             for (int i = 0; i < 6; i++)
             {
-                var thumbnail = await GetThumbnailAsync(file, i*1000);
+                var thumbnail = await GetThumbnailAsync(file, i * 1000);
                 BitmapImage bitmapImage = new BitmapImage();
                 InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
                 await RandomAccessStream.CopyAsync(thumbnail, randomAccessStream);
@@ -68,6 +71,28 @@ namespace UWP_Video_CP
 
             }
 
+            //for (int i = 0; i <60; i++)
+            //{
+            //    var thumbnail = await GetThumbnailAsync(file, i * 1000);
+            //    BitmapImage bitmapImage = new BitmapImage();
+            //    InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
+            //    await RandomAccessStream.CopyAsync(thumbnail, randomAccessStream);
+            //    randomAccessStream.Seek(0);
+
+
+            //    BitmapDecoder decoder = await BitmapDecoder.CreateAsync(randomAccessStream);
+            //    WriteableBitmap bmp = new WriteableBitmap((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+            //    bmp.SetSource(randomAccessStream);
+
+
+            //    bitmapImage.SetSource(randomAccessStream);
+            //    // Image img = (Image)this.FindName("VideoFrame" + i);
+            //    // img.Source = bitmapImage;
+            //    await SaveBitmapToFileAsync(bmp, "mike" + i);
+            //    //App.listImg.Add(bmp);
+            //}
+            Debug.WriteLine(App.listImg.Count);
+            
             //BitmapImage bitmapImage1 = new BitmapImage();
             //InMemoryRandomAccessStream randomAccessStream1 = new InMemoryRandomAccessStream();
             //await RandomAccessStream.CopyAsync(thumbnail1, randomAccessStream1);
@@ -100,9 +125,44 @@ namespace UWP_Video_CP
         internal class FileExtensions
         {
             public static readonly string[] Video = new string[] { ".mp4", ".mov" };
+            public static readonly string[] Image = new string[] { ".jpg", ".png" };
         }
 
+        public static async Task SaveBitmapToFileAsync(WriteableBitmap image, string userId)
+        {
+            //C:\Users\mike\AppData\Local\Packages\9ac56cb2-44b1-4055-8c9f-f4d47f946fe7_1pdywbn5ngrp6\LocalState\ProfilePictures
+            StorageFolder pictureFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
+            var file = await pictureFolder.CreateFileAsync(userId + ".jpg", CreationCollisionOption.ReplaceExisting);
 
-       
+            using (var stream = await file.OpenStreamForWriteAsync())
+            {
+                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream.AsRandomAccessStream());
+                var pixelStream = image.PixelBuffer.AsStream();
+                byte[] pixels = new byte[image.PixelBuffer.Length];
+
+                await pixelStream.ReadAsync(pixels, 0, pixels.Length);
+
+                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)image.PixelWidth, (uint)image.PixelHeight, 96, 96, pixels);
+
+                await encoder.FlushAsync();
+            }
+        }
+
+        public static async Task<WriteableBitmap> GetProfilePictureAsync(string userId)
+        {
+            StorageFolder pictureFolder = await ApplicationData.Current.LocalFolder.GetFolderAsync("ProfilePictures");
+            StorageFile pictureFile = await pictureFolder.GetFileAsync(userId + ".jpg");
+
+            using (IRandomAccessStream stream = await pictureFile.OpenAsync(FileAccessMode.Read))
+            {
+                BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+                WriteableBitmap bmp = new WriteableBitmap((int)decoder.PixelWidth, (int)decoder.PixelHeight);
+
+                await bmp.SetSourceAsync(stream);
+
+                return bmp;
+            }
+        }
+
     }
 }

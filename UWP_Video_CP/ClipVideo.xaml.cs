@@ -71,7 +71,7 @@ namespace UWP_Video_CP
             composition = new MediaComposition();
             composition.Clips.Add(clip);
             mediaElement.Position = TimeSpan.Zero;
-            mediaStreamSource = composition.GeneratePreviewMediaStreamSource((int)mediaElement.ActualWidth, (int)mediaElement.ActualHeight);
+            mediaStreamSource = composition.GenerateMediaStreamSource();
             mediaElement.SetMediaStreamSource(mediaStreamSource);
             
             save.IsEnabled = true;

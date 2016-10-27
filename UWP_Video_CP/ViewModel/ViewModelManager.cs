@@ -13,11 +13,11 @@ namespace UWP_Video_CP.ViewModel
         {
             ObservableCollection<ListViewModel> lists = new ObservableCollection<ListViewModel>();
             string cover1 = @"&#xE70F;";
-            string cover2 = @"&#xE786;";
-            
-
-            lists.Add(new ListViewModel("clip and trim video", cover1,typeof(ClipVideo)));
-            lists.Add(new ListViewModel("get single frame", cover2,typeof(GetSingleFrame)));
+            string cover2 = @"&#xE786;";          
+            lists.Add(new ListViewModel("Clip and Trim Video", cover1,typeof(ClipVideo)));
+            lists.Add(new ListViewModel("Get Single Frame", cover2,typeof(GetSingleFrame)));
+            lists.Add(new ListViewModel("Encode Images To Video", cover2, typeof(BitmapsToVideo)));
+            lists.Add(new ListViewModel("Transcoding media", cover2, typeof(Transcoding_Media)));
             return lists;
         } 
     }

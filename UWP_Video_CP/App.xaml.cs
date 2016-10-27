@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace UWP_Video_CP
@@ -22,12 +23,16 @@ namespace UWP_Video_CP
     /// </summary>
     sealed partial class App : Application
     {
+
+        public static List<WriteableBitmap> listImg;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
+
+            listImg = new List<WriteableBitmap>();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }

@@ -16,7 +16,7 @@
         <RelativePanel>
             <Button Name="HambegerBt" RelativePanel.AlignLeftWithPanel="True" Height="40" Width="40" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"  Click="HambegerBt_Click"></Button>
         </RelativePanel>
-        <SplitView Name="MySpliteView" Grid.Row="1" CompactPaneLength="40" OpenPaneLength="200" DisplayMode="Inline">
+        <SplitView Name="MySpliteView" Grid.Row="1" CompactPaneLength="40" OpenPaneLength="300" DisplayMode="Inline">
             <SplitView.Pane>
                 <ListView ItemsSource="{x:Bind ListViewModels}"  SelectionChanged="ListView_SelectionChanged">
                     <ListView.ItemTemplate>

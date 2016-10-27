@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UWP_Video_CP.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -48,6 +49,7 @@ namespace UWP_Video_CP
             {
                 VideoFrame.Navigate(s.ClassType);
             }
+          
         }
     }
 }
