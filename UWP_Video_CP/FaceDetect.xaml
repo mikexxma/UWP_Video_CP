@@ -20,8 +20,15 @@
         
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <Image Name="sourceImg" Height="250" Width="300"></Image>
-         
-            <Canvas Name="detectedResult" Height="250" Width="300" Margin="0,30,0,0"></Canvas>
+            <Canvas Name="detectedResult" Height="250" Width="300"></Canvas>
+            <StackPanel Orientation="Horizontal">
+                <Image Name="face0" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face1" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face2" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face3" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face4" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face5" Width="50" Height="50" Margin="0,0,5,0"></Image>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>
