@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -85,6 +86,13 @@ namespace UWP_Video_CP
 
             // If there is no device mounted on the desired panel, return the first device found
             return desiredDevice ?? allVideoDevices.FirstOrDefault();
+        }
+
+        private async void StopBt_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Stopping recording...");
+            await _mediaCapture.StopRecordAsync();
+            Debug.WriteLine("Stopped recording!");
         }
 
     }

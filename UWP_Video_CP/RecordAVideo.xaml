@@ -12,7 +12,11 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Name="MediaRecordbt" Content="Record A Video" Click="MediaRecordbt_Click"></Button>
+        <StackPanel Orientation="Horizontal">
+            <Button Grid.Row="0" Name="MediaRecordbt" Content="Record A Video" Click="MediaRecordbt_Click"></Button>
+            <Button Name="StopBt" Content="Sotp" Click="StopBt_Click"></Button>
+        </StackPanel>
+        
         <CaptureElement Name="PreviewControl" Stretch="Uniform" Grid.Row="1"/>
     </Grid>
 </Page>
