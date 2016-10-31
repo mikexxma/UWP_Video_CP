@@ -1,0 +1,29 @@
+﻿<Page
+    x:Class="UWP_Video_CP.AddAudioTracks"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UWP_Video_CP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Name="ChoseVideo" Content="Chose A Video" Click="ChoseVideo_Click"></Button>
+            <TextBlock Name="VideoFile" Margin="15,0,0,0"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Name="ChoseAudio" Content="Chose A Audio" Grid.Row="1" Click="ChoseAudio_Click"></Button>
+            <TextBlock Name="AudioFile" Margin="15,0,0,0"></TextBlock>
+        </StackPanel>
+       
+        <Button Name="AddAudioTrack" Content="AddAudioTrack" Grid.Row="2" Click="AddAudioTrack_Click"></Button>
+        <MediaElement Name="mediaElement" AreTransportControlsEnabled="True" Grid.Row="3" AutoPlay="False" Margin="5" HorizontalAlignment="Stretch"></MediaElement>
+    </Grid>
+</Page>

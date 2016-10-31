@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -42,13 +43,13 @@ namespace UWP_Video_CP
             // Get file
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
+           
             picker.FileTypeFilter.Add(".mov");
             pickedFile = await picker.PickSingleFileAsync();
-            //if (pickedFile == null)
-            //{
-            //    rootPage.NotifyUser("File picking cancelled", NotifyType.ErrorMessage);
-            //    return;
-            //}
+            if (pickedFile == null)
+            {                
+                return;
+            }
 
             // These files could be picked from a location that we won't have access to later
             // (especially if persisting the MediaComposition to disk and loading it later). 
