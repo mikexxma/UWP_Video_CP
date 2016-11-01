@@ -96,7 +96,6 @@ namespace UWP_Video_CP
                 {
                     await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
                     {
-                       // rootPage.NotifyUser(string.Format("Saving file... Progress: {0:F0}%", progress), NotifyType.StatusMessage);
                         ResultMessage.Text = string.Format("Saving file... Progress: {0:F0}%", progress);
                     }));
                 });
