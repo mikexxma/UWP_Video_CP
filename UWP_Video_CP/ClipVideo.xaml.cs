@@ -8,6 +8,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Core;
 using Windows.Media.Editing;
+using Windows.Media.Effects;
 using Windows.Media.Transcoding;
 using Windows.Storage;
 using Windows.UI.Core;
@@ -127,6 +128,27 @@ namespace UWP_Video_CP
                     }));
                 });
             }
+        }
+
+        private async void specialVideo_Click(object sender, RoutedEventArgs e)
+        {
+
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
+
+            picker.FileTypeFilter.Add(".mov");
+           StorageFile pickedFilespecial = await picker.PickSingleFileAsync();
+            if (pickedFile == null)
+            {
+                return;
+            }
+            var clip = await MediaClip.CreateFromFileAsync(pickedFilespecial);
+            composition = new MediaComposition();
+            composition.Clips.Add(clip);
+            var videoEffectDefinition = new VideoEffectDefinition("VideoEffectComponent.ExampleVideoEffect", new PropertySet() { { "FadeValue", .5 } });
+            clip.VideoEffectDefinitions.Add(videoEffectDefinition);
+           MediaStreamSource mediaStreamSource = composition.GenerateMediaStreamSource();
+            mediaElement.SetMediaStreamSource(mediaStreamSource);
         }
     }
 }

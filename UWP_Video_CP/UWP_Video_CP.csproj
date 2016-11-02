@@ -194,6 +194,12 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VideoEffectComponent\VideoEffectComponent.csproj">
+      <Project>{15d41d03-9c14-4b0e-aa43-a86e170f278c}</Project>
+      <Name>VideoEffectComponent</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
