@@ -113,8 +113,8 @@ namespace VideoEffectComponent
 
                             int idx = bufferLayout.StartIndex + bufferLayout.Stride * i + bytesPerPixel * j;
 
-                            targetDataInBytes[idx + 0] = (byte)(fadeValue * (float)dataInBytes[idx + 0]);
-                            //targetDataInBytes[idx + 1] = (byte)(fadeValue * (float)dataInBytes[idx + 1]);
+                            //targetDataInBytes[idx + 0] = (byte)(fadeValue * (float)dataInBytes[idx + 0]);
+                            targetDataInBytes[idx + 1] = (byte)(fadeValue * (float)dataInBytes[idx + 1]);
                             //targetDataInBytes[idx + 2] = (byte)(fadeValue * (float)dataInBytes[idx + 2]);
                             //targetDataInBytes[idx + 3] = dataInBytes[idx + 3];
                         }

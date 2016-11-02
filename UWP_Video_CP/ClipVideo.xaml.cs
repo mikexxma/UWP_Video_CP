@@ -135,10 +135,9 @@ namespace UWP_Video_CP
 
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
-
             picker.FileTypeFilter.Add(".mov");
            StorageFile pickedFilespecial = await picker.PickSingleFileAsync();
-            if (pickedFile == null)
+            if (pickedFilespecial == null)
             {
                 return;
             }
