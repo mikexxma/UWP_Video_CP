@@ -21,13 +21,23 @@
         <StackPanel Orientation="Vertical" Grid.Row="1">
             <Image Name="sourceImg" Height="250" Width="300"></Image>
             <Canvas Name="detectedResult" Height="250" Width="300"></Canvas>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                 <Image Name="face0" Width="50" Height="50" Margin="0,0,5,0"></Image>
                 <Image Name="face1" Width="50" Height="50" Margin="0,0,5,0"></Image>
                 <Image Name="face2" Width="50" Height="50" Margin="0,0,5,0"></Image>
                 <Image Name="face3" Width="50" Height="50" Margin="0,0,5,0"></Image>
                 <Image Name="face4" Width="50" Height="50" Margin="0,0,5,0"></Image>
                 <Image Name="face5" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face6" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face7" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face8" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face9" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face10" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face11" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face12" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face13" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face14" Width="50" Height="50" Margin="0,0,5,0"></Image>
+                <Image Name="face15" Width="50" Height="50" Margin="0,0,5,0"></Image>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -72,27 +72,31 @@ namespace UWP_Video_CP
                     Size size = new Size();
                     size.Height = face.FaceBox.Height;
                     size.Width = face.FaceBox.Width;
+
+
                     facelist.Add(await GetCroppedBitmapAsync(photoFile, point, size, 1));
                     this.detectedResult.Children.Add(box);
-                    //for (int i = 0; i < 6; i++)
-                    //{
-                    //    BitmapImage bitmapImage = new BitmapImage();
-                    //    InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
-                    //    Stream pixelStream = facelist[i].PixelBuffer.AsStream();
-                    //    BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, randomAccessStream);
+                   
+                }
 
-                    //    byte[] pixels = new byte[pixelStream.Length];
-                    //    await pixelStream.ReadAsync(pixels, 0, pixels.Length);
-                    //    // Save the image file with jpg extension 
-                    //    encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)facelist[i].PixelWidth, (uint)facelist[i].PixelHeight, 96.0, 96.0, pixels);
-                    //    await encoder.FlushAsync();
+                for (int i = 0; i < facelist.Count; i++)
+                {
+                    BitmapImage bitmapImage = new BitmapImage();
+                    InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
+                    Stream pixelStream = facelist[i].PixelBuffer.AsStream();
+                    BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, randomAccessStream);
 
-                    //    randomAccessStream.Seek(0);
-              
-                    //    bitmapImage.SetSource(randomAccessStream);
-                    //    Image img = (Image)this.FindName("face" + i);
-                    //    img.Source = bitmapImage;
-                    //}
+                    byte[] pixels = new byte[pixelStream.Length];
+                    await pixelStream.ReadAsync(pixels, 0, pixels.Length);
+                    // Save the image file with jpg extension 
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)facelist[i].PixelWidth, (uint)facelist[i].PixelHeight, 96.0, 96.0, pixels);
+                    await encoder.FlushAsync();
+
+                    //randomAccessStream.Seek(0);
+
+                    bitmapImage.SetSource(randomAccessStream);
+                    Image img = (Image)this.FindName("face" + i);
+                    img.Source = bitmapImage;
                 }
             }
 
