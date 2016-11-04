@@ -39,6 +39,7 @@ namespace VideoEffectComponent
 
         public bool IsReadOnly
         {
+            //效果会不会输出来 如果是ture 效果不会输出
             get { return false; }
         }
 
@@ -60,6 +61,7 @@ namespace VideoEffectComponent
 
         public bool TimeIndependent
         {
+            //When set to true, the system can use optimizations that enhance effect performance.
             get { return true; }
         }
 
@@ -113,8 +115,8 @@ namespace VideoEffectComponent
 
                             int idx = bufferLayout.StartIndex + bufferLayout.Stride * i + bytesPerPixel * j;
 
-                            //targetDataInBytes[idx + 0] = (byte)(fadeValue * (float)dataInBytes[idx + 0]);
-                            targetDataInBytes[idx + 1] = (byte)(fadeValue * (float)dataInBytes[idx + 1]);
+                            targetDataInBytes[idx + 0] = (byte)(fadeValue * (float)dataInBytes[idx + 0]);
+                            //targetDataInBytes[idx + 1] = (byte)(fadeValue * (float)dataInBytes[idx + 1]);
                             //targetDataInBytes[idx + 2] = (byte)(fadeValue * (float)dataInBytes[idx + 2]);
                             //targetDataInBytes[idx + 3] = dataInBytes[idx + 3];
                         }

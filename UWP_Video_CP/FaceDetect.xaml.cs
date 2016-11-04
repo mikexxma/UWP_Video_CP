@@ -82,8 +82,10 @@ namespace UWP_Video_CP
                 for (int i = 0; i < facelist.Count; i++)
                 {
                     BitmapImage bitmapImage = new BitmapImage();
-                    InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
-                    Stream pixelStream = facelist[i].PixelBuffer.AsStream();
+                    IRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();                     
+                     Stream pixelStream = facelist[i].PixelBuffer.AsStream();
+                    //randomAccessStream = pixelStream.AsRandomAccessStream();
+
                     BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, randomAccessStream);
 
                     byte[] pixels = new byte[pixelStream.Length];
@@ -92,7 +94,7 @@ namespace UWP_Video_CP
                     encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)facelist[i].PixelWidth, (uint)facelist[i].PixelHeight, 96.0, 96.0, pixels);
                     await encoder.FlushAsync();
 
-                    //randomAccessStream.Seek(0);
+                    randomAccessStream.Seek(0);
 
                     bitmapImage.SetSource(randomAccessStream);
                     Image img = (Image)this.FindName("face" + i);
