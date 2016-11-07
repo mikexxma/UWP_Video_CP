@@ -19,6 +19,7 @@
                 <Button x:Name="chooseFile" Content="Choose Video" Click="ChooseFile_Click" Margin="5" RelativePanel.AlignLeftWith="mediaElement" RelativePanel.Below="mediaElement" />
                 <Button x:Name="trimClip" Content="Clip Video" Click="TrimClip_Click" IsEnabled="False" Margin="5" RelativePanel.Below="mediaElement" RelativePanel.RightOf="chooseFile" />
                 <Button x:Name="save" Content="Save Result" Click="Save_Click" IsEnabled="False" Margin="5" RelativePanel.Below="mediaElement" RelativePanel.RightOf="trimClip"/>
+                <Button x:Name="specialVideo" Content="special Video" Click="specialVideo_Click" Margin="5" RelativePanel.Below="mediaElement" RelativePanel.RightOf="save"/>
                 <TextBlock x:Name="ResultMessage" RelativePanel.Below="save" Foreground="Green"></TextBlock>
             </RelativePanel>
         </ScrollViewer>

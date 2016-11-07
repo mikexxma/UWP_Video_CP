@@ -11,6 +11,7 @@ using Windows.Foundation.Collections;
 using Windows.Media.Capture;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -34,38 +35,41 @@ namespace UWP_Video_CP
         DeviceInformation cameraDevice;
 
         bool _mirroringPreview;
-        public RecordAVideo()
+        public  RecordAVideo()
         {
-            _mediaCapture = new MediaCapture();
+                              
             this.InitializeComponent();                     
             preview_video();
             
         }
 
         private async void MediaRecordbt_Click(object sender, RoutedEventArgs e)
-        {           
+        {   
+                    
             if (cameraDevice == null)
             {
                 return;
             }
             var myVideos = await Windows.Storage.StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
             StorageFile file = await myVideos.SaveFolder.CreateFileAsync("video.mp4", CreationCollisionOption.GenerateUniqueName);
-            _mediaRecording = await _mediaCapture.PrepareLowLagRecordToStorageFileAsync(
-                    MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Auto), file);
+            _mediaRecording = await _mediaCapture.PrepareLowLagRecordToStorageFileAsync(MediaEncodingProfile.CreateMp4(VideoEncodingQuality.Auto), file);
             await _mediaRecording.StartAsync();
-
-           
-            
+            StopBt.IsEnabled = true;
+            MediaRecordbt.IsEnabled = false;  
         }
 
         public async void preview_video()
         {
+            StopBt.IsEnabled = false;
             MediaRecordbt.IsEnabled = false;
             cameraDevice = await FindCameraDeviceByPanelAsync(Windows.Devices.Enumeration.Panel.Back);
             if (cameraDevice == null)
             {
                 return;
             }
+            _mediaCapture = new MediaCapture();
+            await _mediaCapture.InitializeAsync();
+            _mediaCapture.Failed += MediaCapture_Failed;
             MediaRecordbt.IsEnabled = true;
             _mirroringPreview = (cameraDevice.EnclosureLocation.Panel == Windows.Devices.Enumeration.Panel.Front);
             // Set the preview source in the UI and mirror it if necessary
@@ -75,6 +79,10 @@ namespace UWP_Video_CP
             await _mediaCapture.StartPreviewAsync();
         }
 
+        private void MediaCapture_Failed(MediaCapture sender, MediaCaptureFailedEventArgs errorEventArgs)
+        {
+           
+        }
 
         private static async Task<DeviceInformation> FindCameraDeviceByPanelAsync(Windows.Devices.Enumeration.Panel desiredPanel)
         {
@@ -91,8 +99,30 @@ namespace UWP_Video_CP
         private async void StopBt_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Stopping recording...");
-            await _mediaCapture.StopRecordAsync();
+            await _mediaRecording.StopAsync();
             Debug.WriteLine("Stopped recording!");
+            StopBt.IsEnabled = false;
+            MediaRecordbt.IsEnabled = true;
+        }
+
+        protected async override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            await CleanupCameraAsync();
+        }
+
+        private async Task CleanupCameraAsync()
+        {
+            if (_mediaCapture != null)
+            {
+                await _mediaCapture.StopPreviewAsync();
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    PreviewControl.Source = null;
+                    _mediaCapture.Dispose();
+                    _mediaCapture = null;
+                });
+            }
+
         }
 
     }

@@ -8,6 +8,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Core;
 using Windows.Media.Editing;
+using Windows.Media.Effects;
 using Windows.Media.Transcoding;
 using Windows.Storage;
 using Windows.UI.Core;
@@ -28,7 +29,6 @@ namespace UWP_Video_CP
     /// </summary>
     public sealed partial class ClipVideo : Page
     {
-
         private StorageFile pickedFile;
         private MediaComposition composition;
         private MediaStreamSource mediaStreamSource;
@@ -38,8 +38,7 @@ namespace UWP_Video_CP
         }
 
         private async void ChooseFile_Click(object sender, RoutedEventArgs e)
-        {
-           
+        {           
             // Get file
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
@@ -74,8 +73,7 @@ namespace UWP_Video_CP
             composition.Clips.Add(clip);
             mediaElement.Position = TimeSpan.Zero;
             mediaStreamSource = composition.GenerateMediaStreamSource();
-            mediaElement.SetMediaStreamSource(mediaStreamSource);
-            
+            mediaElement.SetMediaStreamSource(mediaStreamSource);            
             save.IsEnabled = true;
         }
 
@@ -97,7 +95,6 @@ namespace UWP_Video_CP
                 {
                     await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
                     {
-                       // rootPage.NotifyUser(string.Format("Saving file... Progress: {0:F0}%", progress), NotifyType.StatusMessage);
                         ResultMessage.Text = string.Format("Saving file... Progress: {0:F0}%", progress);
                     }));
                 });
@@ -110,12 +107,10 @@ namespace UWP_Video_CP
                             var results = info.GetResults();
                             if (results != TranscodeFailureReason.None || status != AsyncStatus.Completed)
                             {
-                                //rootPage.NotifyUser("Saving was unsuccessful", NotifyType.ErrorMessage);
                                 ResultMessage.Text = "saving error";
                             }
                             else
                             {
-                                //rootPage.NotifyUser("Trimmed clip saved to file", NotifyType.StatusMessage);
                                 ResultMessage.Text = "saving success";
                             }
                         }
@@ -129,6 +124,26 @@ namespace UWP_Video_CP
                     }));
                 });
             }
+        }
+
+        private async void specialVideo_Click(object sender, RoutedEventArgs e)
+        {
+
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
+            picker.FileTypeFilter.Add(".mov");
+           StorageFile pickedFilespecial = await picker.PickSingleFileAsync();
+            if (pickedFilespecial == null)
+            {
+                return;
+            }
+            var clip = await MediaClip.CreateFromFileAsync(pickedFilespecial);
+            composition = new MediaComposition();
+            composition.Clips.Add(clip);
+            var videoEffectDefinition = new VideoEffectDefinition("VideoEffectComponent.ExampleVideoEffect", new PropertySet() { { "FadeValue", .9 } });
+            clip.VideoEffectDefinitions.Add(videoEffectDefinition);
+            MediaStreamSource mediaStreamSource = composition.GenerateMediaStreamSource();
+            mediaElement.SetMediaStreamSource(mediaStreamSource);
         }
     }
 }

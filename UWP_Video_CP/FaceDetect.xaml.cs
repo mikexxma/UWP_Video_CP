@@ -57,10 +57,6 @@ namespace UWP_Video_CP
 
                 foreach (DetectedFace face in foundFaces)
                 {
-                    // Create a rectangle element for displaying the face box but since we're using a Canvas
-                    // we must scale the rectangles according to the image’s actual size.
-                    // The original FaceBox values are saved in the Rectangle's Tag field so we can update the
-                    // boxes when the Canvas is resized.
                     Rectangle box = new Rectangle();
                     box.Tag = face.FaceBox;
                     box.Width = (uint)(face.FaceBox.Width / widthScale);
@@ -76,27 +72,33 @@ namespace UWP_Video_CP
                     Size size = new Size();
                     size.Height = face.FaceBox.Height;
                     size.Width = face.FaceBox.Width;
+
+
                     facelist.Add(await GetCroppedBitmapAsync(photoFile, point, size, 1));
                     this.detectedResult.Children.Add(box);
-                    //for (int i = 0; i < 6; i++)
-                    //{
-                    //    BitmapImage bitmapImage = new BitmapImage();
-                    //    InMemoryRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();
-                    //    Stream pixelStream = facelist[i].PixelBuffer.AsStream();
-                    //    BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, randomAccessStream);
+                   
+                }
 
-                    //    byte[] pixels = new byte[pixelStream.Length];
-                    //    await pixelStream.ReadAsync(pixels, 0, pixels.Length);
-                    //    // Save the image file with jpg extension 
-                    //    encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)facelist[i].PixelWidth, (uint)facelist[i].PixelHeight, 96.0, 96.0, pixels);
-                    //    await encoder.FlushAsync();
+                for (int i = 0; i < facelist.Count; i++)
+                {
+                    BitmapImage bitmapImage = new BitmapImage();
+                    IRandomAccessStream randomAccessStream = new InMemoryRandomAccessStream();                     
+                     Stream pixelStream = facelist[i].PixelBuffer.AsStream();
+                    //randomAccessStream = pixelStream.AsRandomAccessStream();
 
-                    //    randomAccessStream.Seek(0);
-              
-                    //    bitmapImage.SetSource(randomAccessStream);
-                    //    Image img = (Image)this.FindName("face" + i);
-                    //    img.Source = bitmapImage;
-                    //}
+                    BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, randomAccessStream);
+
+                    byte[] pixels = new byte[pixelStream.Length];
+                    await pixelStream.ReadAsync(pixels, 0, pixels.Length);
+                    // Save the image file with jpg extension 
+                    encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore, (uint)facelist[i].PixelWidth, (uint)facelist[i].PixelHeight, 96.0, 96.0, pixels);
+                    await encoder.FlushAsync();
+
+                    randomAccessStream.Seek(0);
+
+                    bitmapImage.SetSource(randomAccessStream);
+                    Image img = (Image)this.FindName("face" + i);
+                    img.Source = bitmapImage;
                 }
             }
 
@@ -132,15 +134,12 @@ namespace UWP_Video_CP
                 photoPicker.FileTypeFilter.Add(".jpeg");
                 photoPicker.FileTypeFilter.Add(".png");
                 photoPicker.FileTypeFilter.Add(".bmp");
-
                 photoFile = await photoPicker.PickSingleFileAsync();
                 if (photoFile == null)
                 {
                     return;
                 }
 
-                // Open the image file and decode the bitmap into memory.
-                // We'll need to make 2 bitmap copies: one for the FaceDetector and another to display.
                 using (IRandomAccessStream fileStream = await photoFile.OpenAsync(Windows.Storage.FileAccessMode.Read))
                 {
                     BitmapImage bitmapImage = new BitmapImage();
@@ -152,8 +151,8 @@ namespace UWP_Video_CP
 
                     using (SoftwareBitmap originalBitmap = await decoder.GetSoftwareBitmapAsync(decoder.BitmapPixelFormat, BitmapAlphaMode.Ignore, transform, ExifOrientationMode.IgnoreExifOrientation, ColorManagementMode.DoNotColorManage))
                     {
-                        // We need to convert the image into a format that's compatible with FaceDetector.
-                        // Gray8 should be a good type but verify it against FaceDetector’s supported formats.
+                    
+                        // face can detect Gray8 file 
                         const BitmapPixelFormat InputPixelFormat = BitmapPixelFormat.Gray8;
                         if (FaceDetector.IsBitmapPixelFormatSupported(InputPixelFormat))
                         {
@@ -162,15 +161,7 @@ namespace UWP_Video_CP
                                 // Create a WritableBitmap for our visualization display; copy the original bitmap pixels to wb's buffer.
                                 displaySource = new WriteableBitmap(originalBitmap.PixelWidth, originalBitmap.PixelHeight);
                                 originalBitmap.CopyToBuffer(displaySource.PixelBuffer);
-
-                                // Initialize our FaceDetector and execute it against our input image.
-                                // NOTE: FaceDetector initialization can take a long time, and in most cases
-                                // you should create a member variable and reuse the object.
-                                // However, for simplicity in this scenario we instantiate a new instance each time.
-                                FaceDetector detector = await FaceDetector.CreateAsync();
-
-                                
-
+                                FaceDetector detector = await FaceDetector.CreateAsync();  // should reuse the detect obj                           
                                 faces = await detector.DetectFacesAsync(detectorInput);
                                 // Create our display using the available image and face results.
                                 this.SetupVisualization(displaySource, faces);
