@@ -37,9 +37,7 @@ namespace UWP_Video_CP
         bool _mirroringPreview;
         public  RecordAVideo()
         {
-           
-          
-          
+                              
             this.InitializeComponent();                     
             preview_video();
             

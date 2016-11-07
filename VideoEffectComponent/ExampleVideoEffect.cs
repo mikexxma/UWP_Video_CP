@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -56,7 +57,7 @@ namespace VideoEffectComponent
 
         public MediaMemoryTypes SupportedMemoryTypes
         {
-            get { return MediaMemoryTypes.Cpu; }//cpu 处理softwabitma gpu处理IDirect3DSurface
+            get { return MediaMemoryTypes.Cpu; }//cpu处理softwabitma gpu处理IDirect3DSurface
         }
 
         public bool TimeIndependent
@@ -81,6 +82,8 @@ namespace VideoEffectComponent
 
         public unsafe void ProcessFrame(ProcessVideoFrameContext context)
         {
+            frameCount++;
+            Debug.WriteLine("Frame count: "+frameCount);
             using (BitmapBuffer buffer = context.InputFrame.SoftwareBitmap.LockBuffer(BitmapBufferAccessMode.Read))
             using (BitmapBuffer targetBuffer = context.OutputFrame.SoftwareBitmap.LockBuffer(BitmapBufferAccessMode.Write))
             {
@@ -116,6 +119,7 @@ namespace VideoEffectComponent
                             int idx = bufferLayout.StartIndex + bufferLayout.Stride * i + bytesPerPixel * j;
 
                             targetDataInBytes[idx + 0] = (byte)(fadeValue * (float)dataInBytes[idx + 0]);
+
                             //targetDataInBytes[idx + 1] = (byte)(fadeValue * (float)dataInBytes[idx + 1]);
                             //targetDataInBytes[idx + 2] = (byte)(fadeValue * (float)dataInBytes[idx + 2]);
                             //targetDataInBytes[idx + 3] = dataInBytes[idx + 3];

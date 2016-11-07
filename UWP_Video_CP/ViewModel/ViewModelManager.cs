@@ -15,7 +15,7 @@ namespace UWP_Video_CP.ViewModel
             string cover1 = @"&#xE70F;";
             string cover2 = @"&#xE786;";
             lists.Add(new ListViewModel("Record a video", cover1, typeof(RecordAVideo)));
-            lists.Add(new ListViewModel("Clip and Trim Video", cover1,typeof(ClipVideo)));
+            lists.Add(new ListViewModel("Clip and Effect Video", cover1,typeof(ClipVideo)));
             lists.Add(new ListViewModel("Append Two Videos", cover1, typeof(MediaAppend)));
             lists.Add(new ListViewModel("Add Audio Track", cover1, typeof(AddAudioTracks)));
             lists.Add(new ListViewModel("Add Overlay Video", cover1, typeof(AddOverlaysMedia)));
