@@ -45,6 +45,7 @@ namespace UWP_Video_CP
             picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.VideosLibrary;
            
             picker.FileTypeFilter.Add(".mov");
+            picker.FileTypeFilter.Add(".mp4");
             pickedFile = await picker.PickSingleFileAsync();
             if (pickedFile == null)
             {                
